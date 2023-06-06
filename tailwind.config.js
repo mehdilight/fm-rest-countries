@@ -8,8 +8,17 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        darkBlue: {
+          regular: '#2B3945',
+          dark: '#202C37',
+          darkest: '#111517'
+        },
+        darkGrey: '#858585',
+        lightGrey: '#FAFAFA'
+      },
       fontFamily: {
-        'sans': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
+        'sans': ['Nunito Sans','Proxima Nova', ...defaultTheme.fontFamily.sans],
       },
     },
   },
