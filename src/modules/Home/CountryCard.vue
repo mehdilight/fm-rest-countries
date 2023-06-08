@@ -7,7 +7,7 @@ const props = defineProps({
 });
 </script>
 <template>
-    <RouterLink :to="{name: 'country-details', params: {'cca3': country.cca3}}">
+    <RouterLink :to="{name: 'country-details', params: {cca3: country.cca3}}">
         <article class="overflow-hidden bg-white rounded-md shadow-lg dark:bg-darkBlue-regular">
         <img class="w-full aspect-video" :src="country.flags.png" :alt="country.flags.alt">
         <div class="p-8">

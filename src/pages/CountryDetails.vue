@@ -1,13 +1,19 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router'
 import useCountries from '../hooks/useCountries';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 const { findByCode } = useCountries();
 const country = ref({});
 const loading = ref(true);
 const router = useRouter()
 const route = useRoute()
+
+watch(() => JSON.stringify(route.params), async () => {
+    // react to param changes
+    let country = await findByCode(route.params.cca3);
+    setCountryOrRedirect(country)
+})
 
 const setCountryOrRedirect = (theCountry) => {
     if (!theCountry) return router.push('/');
@@ -111,10 +117,11 @@ onMounted(async () => {
                     <h3 class="mb-6 font-bold text-md">
                         Border countries:
                     </h3>
-                    <ul class="flex space-x-3">
+                    <ul class="flex flex-wrap gap-4">
                         <li v-for="borderCountry in country.borders" :key="borderCountry.cca3">
-                            <RouterLink class="inline-block px-6 py-2 bg-white rounded shadow-md dark:bg-darkBlue-regular"
-                                :to="{ name: 'country-details', params: { cca3: borderCountry.ccna3 } }">
+                            <RouterLink 
+                                class="inline-block px-6 py-2 bg-white rounded shadow-md dark:bg-darkBlue-regular"
+                                :to="{name: 'country-details', params:{cca3: borderCountry.cca3}}">
                                 {{ borderCountry.name }}
                             </RouterLink>
                         </li>
