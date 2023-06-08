@@ -1,3 +1,12 @@
+<script setup>
+import { useColorMode, useDark, useToggle } from '@vueuse/core';
+
+let colorMode = useColorMode();
+const isDark = useDark();
+const toggle = () => {
+    colorMode.value = isDark.value ? 'light': 'dark';
+}
+</script>
 <template>
     <header class="sticky top-0 z-50 px-6 py-8 bg-white shadow-md dark:bg-darkBlue-regular">
         <div class="container flex items-center justify-between mx-auto lg:px-4">
@@ -5,7 +14,7 @@
                 Where in the world?
             </a>
 
-            <button class="flex items-center space-x-2 text-sm font-semibold">
+            <button @click="toggle" class="flex items-center space-x-2 text-sm font-semibold">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round"
