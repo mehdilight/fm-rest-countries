@@ -80,14 +80,64 @@ export default function useCountries() {
         }
     }
 
-    onMounted(async () => {
-        await refresh();
-    })
+    const findCountryNameByCode = async (ccn3) => {
+        try {
+            const response = await fetch(`https://restcountries.com/v3.1/alpha/${ccn3}`);
+
+            if (!response.ok) {
+                // handle errors
+                return null;
+            }
+
+            const data = await response.json();
+            return data[0].name.common;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    const hydrateBorderCountries = async (country) => {
+        const borders = country.borders;
+        const promises = borders.map(async (ccn3) => {
+            let name = await findCountryNameByCode(ccn3);
+
+            return {
+                name,
+                ccn3
+            }
+        });
+
+        const names = await Promise.all(promises);
+
+        country.borders = names;
+
+        return country;
+    }
+
+    const findByCode = async (ccn3) => {
+        try {
+            const response = await fetch(`https://restcountries.com/v3.1/alpha/${ccn3}`);
+
+            if (!response.ok) {
+                // handle errors
+                return null;
+            }
+
+            const data = await response.json();
+            let country = data[0];
+
+            return await hydrateBorderCountries(country);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
 
     return {
         searchTerm,
         region,
         countries,
-        loading
+        findByCode,
+        loading,
+        refresh
     }
 }

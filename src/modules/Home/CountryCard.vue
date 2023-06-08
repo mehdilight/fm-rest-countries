@@ -5,10 +5,10 @@ const props = defineProps({
         required: true
     }
 });
-
 </script>
 <template>
-    <article class="overflow-hidden bg-white rounded-md shadow-lg dark:bg-darkBlue-regular">
+    <RouterLink :to="{name: 'country-details', params: {'cca3': country.cca3}}">
+        <article class="overflow-hidden bg-white rounded-md shadow-lg dark:bg-darkBlue-regular">
         <img class="w-full aspect-video" :src="country.flags.png" :alt="country.flags.alt">
         <div class="p-8">
             <h2 class="mb-5 text-lg font-bold">
@@ -42,4 +42,5 @@ const props = defineProps({
             </dl>
         </div>
     </article>
+    </RouterLink>
 </template>
