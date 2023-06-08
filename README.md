@@ -51,7 +51,7 @@ Users should be able to:
 
 ### Notes
 
-Some of the things we can improve in this project is caching the response. in order to reduce API requests. also the error handling, in case if the request fails we should show to the users a meaning full alert.
+Some of the things we can improve in this project is caching the response. in order to reduce API requests. also the error handling, in case if the request fails we should show to the users a meaningful alert.
 
 
 ### Useful resources
