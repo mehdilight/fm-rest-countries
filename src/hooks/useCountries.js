@@ -1,4 +1,4 @@
-import { computed, onMounted, ref, watch } from "vue"
+import { ref, watch } from "vue"
 import { debounce } from "../utils";
 
 
@@ -80,9 +80,9 @@ export default function useCountries() {
         }
     }
 
-    const findCountryNameByCode = async (ccn3) => {
+    const findCountryByCode = async (cca3) => {
         try {
-            const response = await fetch(`https://restcountries.com/v3.1/alpha/${ccn3}`);
+            const response = await fetch(`https://restcountries.com/v3.1/alpha/${cca3}`);
 
             if (!response.ok) {
                 // handle errors
@@ -90,7 +90,9 @@ export default function useCountries() {
             }
 
             const data = await response.json();
-            return data[0].name.common;
+            if (data.length === 0) return null;
+
+            return data[0];
         } catch (error) {
             return null;
         }
@@ -98,12 +100,13 @@ export default function useCountries() {
 
     const hydrateBorderCountries = async (country) => {
         const borders = country.borders;
-        const promises = borders.map(async (ccn3) => {
-            let name = await findCountryNameByCode(ccn3);
+        const promises = borders.map(async (cca3) => {
+            let country = await findCountryByCode(cca3);
+            if (!country) return null;
 
             return {
-                name,
-                ccn3
+                name: country.name.common,
+                cca3: country.cca3
             }
         });
 
@@ -114,9 +117,9 @@ export default function useCountries() {
         return country;
     }
 
-    const findByCode = async (ccn3) => {
+    const findByCode = async (cca3) => {
         try {
-            const response = await fetch(`https://restcountries.com/v3.1/alpha/${ccn3}`);
+            const response = await fetch(`https://restcountries.com/v3.1/alpha/${cca3}`);
 
             if (!response.ok) {
                 // handle errors
