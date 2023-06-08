@@ -100,6 +100,11 @@ export default function useCountries() {
 
     const hydrateBorderCountries = async (country) => {
         const borders = country.borders;
+        if (!borders) {
+            country.borders = [];
+            return country;
+        }
+
         const promises = borders.map(async (cca3) => {
             let country = await findCountryByCode(cca3);
             if (!country) return null;
