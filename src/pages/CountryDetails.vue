@@ -35,7 +35,7 @@ onMounted(async () => {
             Back
         </RouterLink>
         <section v-if="!loading" class="lg:grid lg:grid-cols-2 lg:gap-16">
-            <img class="w-full aspect-video" :src="country.flags.png" :alt="country.flags.alt">
+            <img class="w-full aspect-video" :src="country.flags.png" :alt="country.flags.alt || 'flag image'">
             <div class="mt-10 space-y-10 lg:mt-0">
                 <h2 class="text-xl font-bold">
                     {{ country.name.common }}
