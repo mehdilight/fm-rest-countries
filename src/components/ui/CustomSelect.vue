@@ -20,7 +20,7 @@ const props = defineProps({
 
 const regions = ref([
     { name: 'Africa' },
-    { name: 'America' },
+    { name: 'Americas' },
     { name: 'Asia' },
     { name: 'Europe' },
     { name: 'Oceania' },
